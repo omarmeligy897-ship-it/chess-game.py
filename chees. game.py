@@ -31,23 +31,21 @@ def handle_click(clicked_square):
             st.session_state.selected_square = clicked_square
     # الضغطة الثانية: محاولة النقل
     else:
-        # إنشاء حركية من المربع القديم إلى الجديد
+        # إنشاء حركة من المربع القديم إلى الجديد
         move = chess.Move(selected, clicked_square)
         
-        # التعامل مع ترقية البيدق تلقائياً لوزير إذا وصل لنهاية الرقعة
+        # التعامل مع ترقية البيدق تلقائياً لوزير إذا وصل لنهاية الرقعة (الصف 0 أو الصف 7)
         if board.piece_at(selected) and board.piece_at(selected).piece_type == chess.PAWN:
             if chess.square_rank(clicked_square) in:
                 move.promotion = chess.QUEEN
         
-        # 🛡️ التحقق الصارم: إذا كانت الحركة قانونية يتم تنفيذها، وإذا كانت عشوائية يتم تجاهلها
+        # 🛡️ التحقق الصارم: إذا كانت الحركة قانونية يتم تنفيذها
         if move in board.legal_moves:
             board.push(move)
-        else:
-            st.warning("⚠️ نقلة غير قانونية وفقاً لقوانين الشطرنج!")
             
         st.session_state.selected_square = None
 
-# بناء الرقعة 8×8 (تنبيه: مكتبة chess تبدأ الحساب برمجياً من الأسفل للأعلى)
+# بناء الرقعة 8×8
 board_container = st.container()
 
 with board_container:
@@ -56,14 +54,6 @@ with board_container:
         for col in range(8):
             # تحويل إحداثيات العرض إلى مربعات نظام مكتبة chess
             square = chess.square(col, 7 - row)
-            
-            # تحديد لون المربع الافتراضي
-            is_light = (row + col) % 2 == 0
-            bg_color = "#f0d9b5" if is_light else "#b58863"
-            
-            # تلوين المربع بالأخضر إذا تم تحديده
-            if st.session_state.selected_square == square:
-                bg_color = "#7b9c5e"
             
             # جلب القطعة الحالية من المحرك الذكي
             piece = st.session_state.board.piece_at(square)
