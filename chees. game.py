@@ -34,9 +34,10 @@ def handle_click(clicked_square):
         # إنشاء حركة من المربع القديم إلى الجديد
         move = chess.Move(selected, clicked_square)
         
-        # التعامل مع ترقية البيدق تلقائياً لوزير إذا وصل لنهاية الرقعة (الصف 0 أو الصف 7)
+        # التعامل مع ترقية البيدق تلقائياً لوزير إذا وصل لنهاية الرقعة (الصف الأول أو الأخير)
         if board.piece_at(selected) and board.piece_at(selected).piece_type == chess.PAWN:
-            if chess.square_rank(clicked_square) in:
+            current_rank = chess.square_rank(clicked_square)
+            if current_rank == 0 or current_rank == 7:
                 move.promotion = chess.QUEEN
         
         # 🛡️ التحقق الصارم: إذا كانت الحركة قانونية يتم تنفيذها
