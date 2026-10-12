@@ -70,17 +70,30 @@ with board_container:
                 )
 
 # حقن كود CSS لتنسيق المربعات وعرض العلامة المائية خلف اللعبة
+# حقن كود CSS المطور لتلوين مربعات اللوحة وإظهار العلامة المائية بشكل صحيح
 st.markdown(f"""
     <style>
+        /* تنسيق أزرار مربعات الشطرنج وإجبار الألوان على الظهور بالتبادل */
         div[data-testid="stButton"] button {{
-            font-size: 28px !important;
-            height: 60px !important;
-            border: none !important;
+            font-size: 32px !important;
+            height: 65px !important;
+            width: 100% !important;
+            border: 1px solid rgba(0,0,0,0.1) !important;
             border-radius: 0px !important;
             color: #000000 !important;
-            background-color: transparent;
+            transition: background-color 0.2s;
+        }}
+
+        /* تلوين المربعات البيضاء (الزوجية) */
+        div[data-testid="stHorizontalBlock"] > div:nth-child(even) button {{
+            background-color: #f0d9b5 !important;
         }}
         
+        /* تلوين المربعات البنية (الفردية) */
+        div[data-testid="stHorizontalBlock"] > div:nth-child(odd) button {{
+            background-color: #b58863 !important;
+        }}
+
         /* تأثير العلامة المائية المائلة في خلفية الموقع */
         .stMainBlockContainer::before {{
             content: "{watermark_text}";
@@ -88,13 +101,15 @@ st.markdown(f"""
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) rotate(-30deg);
-            font-size: 80px;
+            font-size: 70px;
             font-weight: bold;
             font-family: Arial, sans-serif;
-            color: rgba(255, 255, 255, 0.04);
-            z-index: 0;
+            color: rgba(255, 255, 255, 0.04); /* لون خفيف جداً متوافق مع المظهر المظلم */
+            z-index: -1;
             pointer-events: none;
             white-space: nowrap;
         }}
     </style>
 """, unsafe_allow_html=True)
+
+  
