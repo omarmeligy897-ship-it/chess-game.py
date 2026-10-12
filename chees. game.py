@@ -6,7 +6,7 @@ st.set_page_config(page_title="لعبة شطرنج - Streamlit", layout="centere
 st.markdown("<h2 style='text-align: center;'>لوحة شطرنج تفاعلية مع علامة مائية</h2>", unsafe_allow_html=True)
 
 # ⚠️ اكتب اسمك أو توقيعك هنا ليظهر كعلامة مائية خلف اللوحة
-watermark_text = "Youssef Chess"
+watermark_text = "PY/OMAR MELIGY"
 
 # إعداد مصفوفة قطع الشطرنج في ذاكرة التخزين المؤقت لـ Streamlit
 if 'board_state' not in st.session_state:
